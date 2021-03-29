@@ -30,8 +30,8 @@ public class UserRepositoryTest extends StudyApplication {
     }
 
     @Test
-    public void read(@RequestParam Long id){
-        Optional<User> user = userRepository.findById(id);
+    public void read(){
+        Optional<User> user = userRepository.findById(2L);
 
         user.ifPresent(selectUser ->{
             System.out.println("user : " + selectUser);
@@ -40,8 +40,17 @@ public class UserRepositoryTest extends StudyApplication {
         
     }
 
+    @Test
     public void update(){
+        Optional<User> user = userRepository.findById(2L);
 
+        user.ifPresent(selectUser -> {
+            selectUser.setAccount("PPPP");
+            selectUser.setUpdatedAt(LocalDateTime.now());
+            selectUser.setUpdatedBy("update method()");
+
+            userRepository.save(selectUser);
+        });
     }
 
     public void delete(){
